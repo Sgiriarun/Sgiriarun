@@ -12,16 +12,14 @@ orbs:
       steps:
         - run:
           name: hello build
-          command: |
-            echo "Hello"
+          command: echo Hello
     print_world:
       docker:
         - image: circleci/node:13.8.0        
       steps:
         - run:
           name: hello build
-          command: |
-            echo "Hello"        
+          command: echo Hello      
 
 workflows:
   # Name the workflow "welcome"

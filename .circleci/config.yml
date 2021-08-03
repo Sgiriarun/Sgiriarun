@@ -9,11 +9,25 @@ jobs:
     docker:
       - image: circleci/node:13.8.0        
     steps:
-      - run: echo world    
-       
+      - run: echo world 
+
+  project_env_var:
+    docker:
+      - image: cimg/base:2020.01
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  
+    steps:
+      - checkout
+      - run:
+          name: "echo an env var that is part of our context"
+          command: |
+            echo $Arun_env_var
+            
 workflows:
   welcome_workflow_name:
     jobs:
+      - project_env_var
       - print_Hello
       - print_world:
           requires: 

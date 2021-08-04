@@ -2,7 +2,7 @@ version: 2.1
 commands: # a resuable command with parameters
   print_pipeline_id:
     steps:
-      - run: echo pipeline.project.git_url
+      - run: echo <<pipeline.project.git_url>>
 
 jobs:
   pipeline_id:

@@ -1,18 +1,15 @@
 version: 2.1
 commands: # a resuable command with parameters
   print_pipeline_id:
-    parameters:
-      to:
-        default: $CIRCLE_WORKFLOW_ID
-        type: string
+    steps:
+      - run: echo ${CIRCLE_WORKFLOW_ID}
 
 jobs:
   pipeline_id:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - print_pipeline_id:
-          to: "$CIRCLE_WORKFLOW_ID"
+      - print_pipeline_id
           
 workflows:
   welcome_workflow_name:

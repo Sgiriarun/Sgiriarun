@@ -1,34 +1,28 @@
 version: 2.1
 jobs:
-  print_Hello:
+  save_hello_world_output:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - run: echo Hello
-  print_world:
+      - run: echo "text to output here" > ~/output.txt
+      - persist_to_workspace: 
+          root: ~/
+          paths: 
+            - output.txt
+
+  print_output_file:
     docker:
       - image: circleci/node:13.8.0        
     steps:
-      - run: echo world 
+      - attach_workspace: 
+          root: ~/
+          paths: 
+            - output.txt
 
-  project_env_var:
-    docker:
-      - image: cimg/base:2020.01
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  
-    steps:
-      - checkout
-      - run:
-          name: "echo an env var that is part of our context"
-          command: |
-            echo $Arun_env_var
-            
 workflows:
   welcome_workflow_name:
     jobs:
-      - project_env_var
-      - print_Hello
-      - print_world:
+      - save_hello_world_output
+      - print_output_file:
           requires: 
-            - print_Hello
+            - save_hello_world_output

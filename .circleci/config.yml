@@ -1,11 +1,19 @@
 version: 2.1
+commands: # a resuable command with parameters
+  print_pipeline_id:
+    parameters:
+      id:
+        type: string
+    steps:
+      - run: echo << parameters.od >>
 
 jobs:
   pipeline_id:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - run: return 1
+      - print_pipeline_id:
+          id: << pipeline.id >>
       - run: 
           name: Tests Failed 
           command: echo "sry one more" 

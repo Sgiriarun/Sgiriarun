@@ -3,7 +3,7 @@ commands: # a resuable command with parameters
   print_pipeline_id:
     parameters:
       id:
-        type: String
+        type: string
     steps:
       - run: echo << parameters.id >>
 

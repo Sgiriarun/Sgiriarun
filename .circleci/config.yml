@@ -1,5 +1,5 @@
 version: 2.1
-commands: # a resuable command with parameters
+commands: # a resuable command 
   destroy_environment:
     steps: 
     - run:

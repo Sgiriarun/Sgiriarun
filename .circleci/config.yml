@@ -22,9 +22,9 @@ jobs:
           name: create_stack
           command: |
             aws cloudformation deploy \
-              --template-file ./template.yml \
+              --template-file template.yml \
               --stack-name prod-${CIRCLE_WORKFLOW_ID} \
-
+              --region us-east-1
       - run: return 1   #simulate an error, cause the job to fail
       - destroy_environment:
           when_to: always

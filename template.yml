@@ -4,7 +4,7 @@ Resourses:
     Properties: 
       - !Ref InstanceSecurityGroup
     KeyName: CD_demo
-    ImageId: ""
+    ImageId: "ami-09e67e426f25ce0d7"
   
     InstanceSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"

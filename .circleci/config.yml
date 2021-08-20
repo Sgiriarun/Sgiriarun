@@ -1,20 +1,23 @@
 version: 2.1
+commands: # a resuable command with parameters
+  destroy_environment:
+    steps: 
+    - run:
+        name: Destroy environment
+        command: |
+          aws cloudformation delete-stack --stack-name prod-${CIRCLE_WORKFLOW_ID}
 
 jobs:
   smoke_test:
     docker:
-      - image: alpine:latest
+      - image: amazon/aws-cli
     steps:
-      - run: apk add --update curl
       - run:
-          name: smoke test.
+          name: simulate error.
           command: |
-            if curl -s --head "https://google.com" 
-            then
-              return 0
-            else
-              return 1
-            fi
+            return 1   #simulate an error, cause the job to fail
+      - destroy_environment
+        when: on_fail
                    
 workflows:
   welcome_workflow_name:

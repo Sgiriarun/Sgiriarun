@@ -24,11 +24,9 @@ Resources:
             Action:
               - 'sts:AssumeRole'
 
-
   WebsiteBucketPolicy:
-    Type: AWS::S3::Policy
+    Type: "AWS::S3::BucketPolicy"
     Properties:
-      PolicyName: S3BucketPolicy
       Bucket: !Ref 'WebsiteBucket'
       PolicyDocument:
         Statement:

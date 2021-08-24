@@ -1,17 +1,19 @@
 Resources:
-  Ec2Instance:
-    Type: 'AWS::EC2::Instance'
-    Properties:
-      SecurityGroups:
-        - !Ref InstanceSecurityGroup
-      KeyName: CD_demo
-      ImageId: 'ami-09e67e426f25ce0d7'
-  InstanceSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
-    Properties:
-      GroupDescription: Enable SSH access via port 22
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: '22'
-          ToPort: '22'
-          CidrIp: 0.0.0.0/0
+WebsiteBucket:
+  Type: AWS::S3::Bucket
+  Properties:
+    BucketName: !Sub "${NAME}"
+    AccessControl: PublicRead
+    WebsiteConfiguration:
+      ErrorDocument: 404.html
+WebsiteBucketPolicy:
+  Type: AWS::S3::BucketPolicy
+  Properties:
+    Bucket: !Ref 'WebsiteBucket'
+    PolicyDocument:
+      Statement:
+      - Sid: PublicReadForGetBucketObjects
+        Effect: Allow
+        Principal: '*'
+        Action: s3:GetObject
+        Resource: !Join ['', ['arn:aws:s3:::', !Ref 'WebsiteBucket', /*]]

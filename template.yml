@@ -9,16 +9,30 @@ Resources:
       BucketName: !Sub ${NAME}
       AccessControl: PublicRead
       WebsiteConfiguration:
+        IndexDocument: index.html
         ErrorDocument: 404.html
 
+S3BucketRole:
+ Type: 'AWS::IAM::Role'
+ Properties:
+  AssumeRolePolicyDocument:
+    Statement:
+      - Effect: Allow
+        Principal:
+          Service:
+            - s3.amazonaws.com
+        Action:
+          - 'sts:AssumeRole'
+
   WebsiteBucketPolicy:
-    Type: AWS::S3::BucketPolicy
+    Type: AWS::S3::Policy
     Properties:
+      PolicyName: S3BucketPolicy
       Bucket: !Ref 'WebsiteBucket'
       PolicyDocument:
         Statement:
-        - Sid: PublicReadForGetBucketObjects
-          Effect: Allow
-          Principal: '*'
-          Action: s3:GetObject
-          Resource: !Join ['', ['arn:aws:s3:::', !Ref 'WebsiteBucket', /*]]
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: s3:GetObject
+            Resource: !Join ['', ['arn:aws:s3:::', !Ref 'WebsiteBucket', /*]]
